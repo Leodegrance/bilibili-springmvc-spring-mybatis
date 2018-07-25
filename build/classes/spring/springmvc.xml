@@ -56,7 +56,7 @@
            			 <mvc:exclude-mapping path="/register_form.do"/><!-- 注册请求 -->
            			  <mvc:exclude-mapping path="/testshabi.do"/><!-- 详情 -->
            			  <mvc:exclude-mapping path="/ajaxtijiao1.do"/><!-- 分类ajax --> 
-           			 <mvc:exclude-mapping path="/shopping.do"/><!-- 商品 -->
+           			 <mvc:exclude-mapping path="/Shopping.do"/><!-- 商品 -->
            			 <mvc:exclude-mapping path="/gridspay.do"/><!-- 商品详情 -->
            			  <mvc:exclude-mapping path="/videon.do"/><!-- 视频播放 -->
            			 <mvc:exclude-mapping path="/messageuser.do"/><!-- 视频播放 -->

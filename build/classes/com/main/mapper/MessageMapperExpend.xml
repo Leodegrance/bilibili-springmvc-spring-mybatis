@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.main.mapper.MessageMapperExpend" >
+	<select id="loadMessageListByVideoId" parameterType="java.lang.String"  resultType="com.main.entity.Message">
+		SELECT * FROM message WHERE messagevideoID = #{_videoid} ORDER BY STR_TO_DATE(messageTime,'%m/%d/%Y %h:%i:%s %p') DESC
+	</select>
+</mapper>

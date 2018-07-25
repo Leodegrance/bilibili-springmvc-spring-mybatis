@@ -1,6 +1,9 @@
 package com.main.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.main.entity.Video;
 import com.main.service.UserListService;
 import com.main.service.entity.EntityMangeService;
+import com.main.service.video.VideoService;
 
 @Controller
 public class Transfer {
@@ -20,9 +25,36 @@ public class Transfer {
 	@Autowired
 	private UserListService userListService;
 	
+	@Autowired
+	VideoService videoService;
+	
+	
 	@RequestMapping("index.do")
-	public String index() {
-		return "index"; // 首页
+	public ModelAndView index() {
+		// 将数据库里面所有的视频查询出来 发送到首页面
+		List<Video> list = null;
+		Map<String, List<Video>> model = new HashMap<>();
+		list = videoService.loadVideoList("1");
+		if(list != null) {
+			model.put("list", list);
+		}
+		
+		list = videoService.loadVideoList("2");
+		if(list != null) {
+			model.put("list2", list);
+		}
+		
+		list = videoService.loadVideoList("3");
+		if(list != null) {
+			model.put("list3", list);
+		}
+		
+		list = videoService.randomVideoList(6);
+		if(list != null) {
+			model.put("randomList", list);
+		}
+			
+		return new ModelAndView("index", model);
 	}
 
 	/**
