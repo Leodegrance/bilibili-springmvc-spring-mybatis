@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.main.mapper.OrdertableMapper" >
+
+    <resultMap id="BaseResultMap" type="com.main.entity.Ordertable" >
+        <id column="OrderID" property="orderid" jdbcType="VARCHAR" />
+        <result column="OrderuserName" property="orderusername" jdbcType="VARCHAR" />
+        <result column="OrderIgridsName" property="orderigridsname" jdbcType="LONGVARCHAR" />
+        <result column="OrdergridsImg" property="ordergridsimg" jdbcType="VARCHAR" />
+        <result column="OrderzongRMB" property="orderzongrmb" jdbcType="VARCHAR" />
+        <result column="OrderState" property="orderstate" jdbcType="VARCHAR" />
+        <result column="OrderTime" property="ordertime" jdbcType="VARCHAR" />
+        <result column="OrderAddr" property="orderaddr" jdbcType="LONGVARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        OrderID, OrderuserName, OrderIgridsName, OrdergridsImg, OrderzongRMB, OrderState, 
+        OrderTime, OrderAddr
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.main.entity.OrdertableExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from ordertable
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from ordertable
+        where OrderID = #{orderid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from ordertable
+        where OrderID = #{orderid,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.main.entity.OrdertableExample" >
+        delete from ordertable
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.main.entity.Ordertable" >
+        insert into ordertable (OrderID, OrderuserName, OrderIgridsName, 
+            OrdergridsImg, OrderzongRMB, OrderState, 
+            OrderTime, OrderAddr)
+        values (#{orderid,jdbcType=VARCHAR}, #{orderusername,jdbcType=VARCHAR}, #{orderigridsname,jdbcType=LONGVARCHAR}, 
+            #{ordergridsimg,jdbcType=VARCHAR}, #{orderzongrmb,jdbcType=VARCHAR}, #{orderstate,jdbcType=VARCHAR}, 
+            #{ordertime,jdbcType=VARCHAR}, #{orderaddr,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.main.entity.Ordertable" >
+        insert into ordertable
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="orderid != null" >
+                OrderID,
+            </if>
+            <if test="orderusername != null" >
+                OrderuserName,
+            </if>
+            <if test="orderigridsname != null" >
+                OrderIgridsName,
+            </if>
+            <if test="ordergridsimg != null" >
+                OrdergridsImg,
+            </if>
+            <if test="orderzongrmb != null" >
+                OrderzongRMB,
+            </if>
+            <if test="orderstate != null" >
+                OrderState,
+            </if>
+            <if test="ordertime != null" >
+                OrderTime,
+            </if>
+            <if test="orderaddr != null" >
+                OrderAddr,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="orderid != null" >
+                #{orderid,jdbcType=VARCHAR},
+            </if>
+            <if test="orderusername != null" >
+                #{orderusername,jdbcType=VARCHAR},
+            </if>
+            <if test="orderigridsname != null" >
+                #{orderigridsname,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="ordergridsimg != null" >
+                #{ordergridsimg,jdbcType=VARCHAR},
+            </if>
+            <if test="orderzongrmb != null" >
+                #{orderzongrmb,jdbcType=VARCHAR},
+            </if>
+            <if test="orderstate != null" >
+                #{orderstate,jdbcType=VARCHAR},
+            </if>
+            <if test="ordertime != null" >
+                #{ordertime,jdbcType=VARCHAR},
+            </if>
+            <if test="orderaddr != null" >
+                #{orderaddr,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.main.entity.OrdertableExample" resultType="java.lang.Integer" >
+        select count(*) from ordertable
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update ordertable
+        <set >
+            <if test="record.orderid != null" >
+                OrderID = #{record.orderid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderusername != null" >
+                OrderuserName = #{record.orderusername,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderigridsname != null" >
+                OrderIgridsName = #{record.orderigridsname,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.ordergridsimg != null" >
+                OrdergridsImg = #{record.ordergridsimg,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderzongrmb != null" >
+                OrderzongRMB = #{record.orderzongrmb,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderstate != null" >
+                OrderState = #{record.orderstate,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ordertime != null" >
+                OrderTime = #{record.ordertime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderaddr != null" >
+                OrderAddr = #{record.orderaddr,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update ordertable
+        set OrderID = #{record.orderid,jdbcType=VARCHAR},
+            OrderuserName = #{record.orderusername,jdbcType=VARCHAR},
+            OrderIgridsName = #{record.orderigridsname,jdbcType=LONGVARCHAR},
+            OrdergridsImg = #{record.ordergridsimg,jdbcType=VARCHAR},
+            OrderzongRMB = #{record.orderzongrmb,jdbcType=VARCHAR},
+            OrderState = #{record.orderstate,jdbcType=VARCHAR},
+            OrderTime = #{record.ordertime,jdbcType=VARCHAR},
+            OrderAddr = #{record.orderaddr,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.main.entity.Ordertable" >
+        update ordertable
+        <set >
+            <if test="orderusername != null" >
+                OrderuserName = #{orderusername,jdbcType=VARCHAR},
+            </if>
+            <if test="orderigridsname != null" >
+                OrderIgridsName = #{orderigridsname,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="ordergridsimg != null" >
+                OrdergridsImg = #{ordergridsimg,jdbcType=VARCHAR},
+            </if>
+            <if test="orderzongrmb != null" >
+                OrderzongRMB = #{orderzongrmb,jdbcType=VARCHAR},
+            </if>
+            <if test="orderstate != null" >
+                OrderState = #{orderstate,jdbcType=VARCHAR},
+            </if>
+            <if test="ordertime != null" >
+                OrderTime = #{ordertime,jdbcType=VARCHAR},
+            </if>
+            <if test="orderaddr != null" >
+                OrderAddr = #{orderaddr,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where OrderID = #{orderid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.main.entity.Ordertable" >
+        update ordertable
+        set OrderuserName = #{orderusername,jdbcType=VARCHAR},
+            OrderIgridsName = #{orderigridsname,jdbcType=LONGVARCHAR},
+            OrdergridsImg = #{ordergridsimg,jdbcType=VARCHAR},
+            OrderzongRMB = #{orderzongrmb,jdbcType=VARCHAR},
+            OrderState = #{orderstate,jdbcType=VARCHAR},
+            OrderTime = #{ordertime,jdbcType=VARCHAR},
+            OrderAddr = #{orderaddr,jdbcType=LONGVARCHAR}
+        where OrderID = #{orderid,jdbcType=VARCHAR}
+    </update>
+</mapper>

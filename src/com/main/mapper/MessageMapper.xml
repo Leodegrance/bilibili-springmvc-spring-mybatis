@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.main.mapper.MessageMapper" >
+
+    <resultMap id="BaseResultMap" type="com.main.entity.Message" >
+        <id column="messageID" property="messageid" jdbcType="VARCHAR" />
+        <result column="messagevideoID" property="messagevideoid" jdbcType="VARCHAR" />
+        <result column="messageuserID" property="messageuserid" jdbcType="VARCHAR" />
+        <result column="messageuserName" property="messageusername" jdbcType="VARCHAR" />
+        <result column="message" property="message" jdbcType="LONGVARCHAR" />
+        <result column="messageTime" property="messagetime" jdbcType="VARCHAR" />
+        <result column="messageHand" property="messagehand" jdbcType="LONGVARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        messageID, messagevideoID, messageuserID, messageuserName, message, messageTime, 
+        messageHand
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.main.entity.MessageExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from message
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from message
+        where messageID = #{messageid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from message
+        where messageID = #{messageid,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.main.entity.MessageExample" >
+        delete from message
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.main.entity.Message" >
+        insert into message (messageID, messagevideoID, messageuserID, 
+            messageuserName, message, messageTime, 
+            messageHand)
+        values (#{messageid,jdbcType=VARCHAR}, #{messagevideoid,jdbcType=VARCHAR}, #{messageuserid,jdbcType=VARCHAR}, 
+            #{messageusername,jdbcType=VARCHAR}, #{message,jdbcType=LONGVARCHAR}, #{messagetime,jdbcType=VARCHAR}, 
+            #{messagehand,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.main.entity.Message" >
+        insert into message
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="messageid != null" >
+                messageID,
+            </if>
+            <if test="messagevideoid != null" >
+                messagevideoID,
+            </if>
+            <if test="messageuserid != null" >
+                messageuserID,
+            </if>
+            <if test="messageusername != null" >
+                messageuserName,
+            </if>
+            <if test="message != null" >
+                message,
+            </if>
+            <if test="messagetime != null" >
+                messageTime,
+            </if>
+            <if test="messagehand != null" >
+                messageHand,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="messageid != null" >
+                #{messageid,jdbcType=VARCHAR},
+            </if>
+            <if test="messagevideoid != null" >
+                #{messagevideoid,jdbcType=VARCHAR},
+            </if>
+            <if test="messageuserid != null" >
+                #{messageuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="messageusername != null" >
+                #{messageusername,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null" >
+                #{message,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="messagetime != null" >
+                #{messagetime,jdbcType=VARCHAR},
+            </if>
+            <if test="messagehand != null" >
+                #{messagehand,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.main.entity.MessageExample" resultType="java.lang.Integer" >
+        select count(*) from message
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update message
+        <set >
+            <if test="record.messageid != null" >
+                messageID = #{record.messageid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.messagevideoid != null" >
+                messagevideoID = #{record.messagevideoid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.messageuserid != null" >
+                messageuserID = #{record.messageuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.messageusername != null" >
+                messageuserName = #{record.messageusername,jdbcType=VARCHAR},
+            </if>
+            <if test="record.message != null" >
+                message = #{record.message,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.messagetime != null" >
+                messageTime = #{record.messagetime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.messagehand != null" >
+                messageHand = #{record.messagehand,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update message
+        set messageID = #{record.messageid,jdbcType=VARCHAR},
+            messagevideoID = #{record.messagevideoid,jdbcType=VARCHAR},
+            messageuserID = #{record.messageuserid,jdbcType=VARCHAR},
+            messageuserName = #{record.messageusername,jdbcType=VARCHAR},
+            message = #{record.message,jdbcType=LONGVARCHAR},
+            messageTime = #{record.messagetime,jdbcType=VARCHAR},
+            messageHand = #{record.messagehand,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.main.entity.Message" >
+        update message
+        <set >
+            <if test="messagevideoid != null" >
+                messagevideoID = #{messagevideoid,jdbcType=VARCHAR},
+            </if>
+            <if test="messageuserid != null" >
+                messageuserID = #{messageuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="messageusername != null" >
+                messageuserName = #{messageusername,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null" >
+                message = #{message,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="messagetime != null" >
+                messageTime = #{messagetime,jdbcType=VARCHAR},
+            </if>
+            <if test="messagehand != null" >
+                messageHand = #{messagehand,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where messageID = #{messageid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.main.entity.Message" >
+        update message
+        set messagevideoID = #{messagevideoid,jdbcType=VARCHAR},
+            messageuserID = #{messageuserid,jdbcType=VARCHAR},
+            messageuserName = #{messageusername,jdbcType=VARCHAR},
+            message = #{message,jdbcType=LONGVARCHAR},
+            messageTime = #{messagetime,jdbcType=VARCHAR},
+            messageHand = #{messagehand,jdbcType=LONGVARCHAR}
+        where messageID = #{messageid,jdbcType=VARCHAR}
+    </update>
+</mapper>

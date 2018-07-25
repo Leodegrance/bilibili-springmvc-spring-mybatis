@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.main.mapper.ShoppingcartMapper" >
+
+    <resultMap id="BaseResultMap" type="com.main.entity.Shoppingcart" >
+        <id column="cartID" property="cartid" jdbcType="VARCHAR" />
+        <result column="userName" property="username" jdbcType="VARCHAR" />
+        <result column="shoopingID" property="shoopingid" jdbcType="VARCHAR" />
+        <result column="shoopingName" property="shoopingname" jdbcType="VARCHAR" />
+        <result column="shoopingImg" property="shoopingimg" jdbcType="VARCHAR" />
+        <result column="shoopingjiage" property="shoopingjiage" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        cartID, userName, shoopingID, shoopingName, shoopingImg, shoopingjiage
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.main.entity.ShoppingcartExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from shoppingcart
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from shoppingcart
+        where cartID = #{cartid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from shoppingcart
+        where cartID = #{cartid,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.main.entity.ShoppingcartExample" >
+        delete from shoppingcart
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.main.entity.Shoppingcart" >
+        insert into shoppingcart (cartID, userName, shoopingID, 
+            shoopingName, shoopingImg, shoopingjiage
+            )
+        values (#{cartid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{shoopingid,jdbcType=VARCHAR}, 
+            #{shoopingname,jdbcType=VARCHAR}, #{shoopingimg,jdbcType=VARCHAR}, #{shoopingjiage,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.main.entity.Shoppingcart" >
+        insert into shoppingcart
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="cartid != null" >
+                cartID,
+            </if>
+            <if test="username != null" >
+                userName,
+            </if>
+            <if test="shoopingid != null" >
+                shoopingID,
+            </if>
+            <if test="shoopingname != null" >
+                shoopingName,
+            </if>
+            <if test="shoopingimg != null" >
+                shoopingImg,
+            </if>
+            <if test="shoopingjiage != null" >
+                shoopingjiage,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="cartid != null" >
+                #{cartid,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null" >
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="shoopingid != null" >
+                #{shoopingid,jdbcType=VARCHAR},
+            </if>
+            <if test="shoopingname != null" >
+                #{shoopingname,jdbcType=VARCHAR},
+            </if>
+            <if test="shoopingimg != null" >
+                #{shoopingimg,jdbcType=VARCHAR},
+            </if>
+            <if test="shoopingjiage != null" >
+                #{shoopingjiage,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.main.entity.ShoppingcartExample" resultType="java.lang.Integer" >
+        select count(*) from shoppingcart
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update shoppingcart
+        <set >
+            <if test="record.cartid != null" >
+                cartID = #{record.cartid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.username != null" >
+                userName = #{record.username,jdbcType=VARCHAR},
+            </if>
+            <if test="record.shoopingid != null" >
+                shoopingID = #{record.shoopingid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.shoopingname != null" >
+                shoopingName = #{record.shoopingname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.shoopingimg != null" >
+                shoopingImg = #{record.shoopingimg,jdbcType=VARCHAR},
+            </if>
+            <if test="record.shoopingjiage != null" >
+                shoopingjiage = #{record.shoopingjiage,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update shoppingcart
+        set cartID = #{record.cartid,jdbcType=VARCHAR},
+            userName = #{record.username,jdbcType=VARCHAR},
+            shoopingID = #{record.shoopingid,jdbcType=VARCHAR},
+            shoopingName = #{record.shoopingname,jdbcType=VARCHAR},
+            shoopingImg = #{record.shoopingimg,jdbcType=VARCHAR},
+            shoopingjiage = #{record.shoopingjiage,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.main.entity.Shoppingcart" >
+        update shoppingcart
+        <set >
+            <if test="username != null" >
+                userName = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="shoopingid != null" >
+                shoopingID = #{shoopingid,jdbcType=VARCHAR},
+            </if>
+            <if test="shoopingname != null" >
+                shoopingName = #{shoopingname,jdbcType=VARCHAR},
+            </if>
+            <if test="shoopingimg != null" >
+                shoopingImg = #{shoopingimg,jdbcType=VARCHAR},
+            </if>
+            <if test="shoopingjiage != null" >
+                shoopingjiage = #{shoopingjiage,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where cartID = #{cartid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.main.entity.Shoppingcart" >
+        update shoppingcart
+        set userName = #{username,jdbcType=VARCHAR},
+            shoopingID = #{shoopingid,jdbcType=VARCHAR},
+            shoopingName = #{shoopingname,jdbcType=VARCHAR},
+            shoopingImg = #{shoopingimg,jdbcType=VARCHAR},
+            shoopingjiage = #{shoopingjiage,jdbcType=VARCHAR}
+        where cartID = #{cartid,jdbcType=VARCHAR}
+    </update>
+</mapper>

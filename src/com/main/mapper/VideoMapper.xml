@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.main.mapper.VideoMapper" >
+
+    <resultMap id="BaseResultMap" type="com.main.entity.Video" >
+        <id column="videoID" property="videoid" jdbcType="VARCHAR" />
+        <result column="videoName" property="videoname" jdbcType="VARCHAR" />
+        <result column="videoImage" property="videoimage" jdbcType="LONGVARCHAR" />
+        <result column="videoAddress" property="videoaddress" jdbcType="LONGVARCHAR" />
+        <result column="videolookTime" property="videolooktime" jdbcType="VARCHAR" />
+        <result column="videoCollection" property="videocollection" jdbcType="LONGVARCHAR" />
+        <result column="videoLeaving" property="videoleaving" jdbcType="LONGVARCHAR" />
+        <result column="videoTime" property="videotime" jdbcType="VARCHAR" />
+        <result column="videoState" property="videostate" jdbcType="VARCHAR" />
+        <result column="videocAtegory" property="videocategory" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        videoID, videoName, videoImage, videoAddress, videolookTime, videoCollection, videoLeaving, 
+        videoTime, videoState, videocAtegory
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.main.entity.VideoExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from video
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from video
+        where videoID = #{videoid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from video
+        where videoID = #{videoid,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.main.entity.VideoExample" >
+        delete from video
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.main.entity.Video" >
+        insert into video (videoID, videoName, videoImage, 
+            videoAddress, videolookTime, videoCollection, 
+            videoLeaving, videoTime, videoState, 
+            videocAtegory)
+        values (#{videoid,jdbcType=VARCHAR}, #{videoname,jdbcType=VARCHAR}, #{videoimage,jdbcType=LONGVARCHAR}, 
+            #{videoaddress,jdbcType=LONGVARCHAR}, #{videolooktime,jdbcType=VARCHAR}, #{videocollection,jdbcType=LONGVARCHAR}, 
+            #{videoleaving,jdbcType=LONGVARCHAR}, #{videotime,jdbcType=VARCHAR}, #{videostate,jdbcType=VARCHAR}, 
+            #{videocategory,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.main.entity.Video" >
+        insert into video
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="videoid != null" >
+                videoID,
+            </if>
+            <if test="videoname != null" >
+                videoName,
+            </if>
+            <if test="videoimage != null" >
+                videoImage,
+            </if>
+            <if test="videoaddress != null" >
+                videoAddress,
+            </if>
+            <if test="videolooktime != null" >
+                videolookTime,
+            </if>
+            <if test="videocollection != null" >
+                videoCollection,
+            </if>
+            <if test="videoleaving != null" >
+                videoLeaving,
+            </if>
+            <if test="videotime != null" >
+                videoTime,
+            </if>
+            <if test="videostate != null" >
+                videoState,
+            </if>
+            <if test="videocategory != null" >
+                videocAtegory,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="videoid != null" >
+                #{videoid,jdbcType=VARCHAR},
+            </if>
+            <if test="videoname != null" >
+                #{videoname,jdbcType=VARCHAR},
+            </if>
+            <if test="videoimage != null" >
+                #{videoimage,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="videoaddress != null" >
+                #{videoaddress,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="videolooktime != null" >
+                #{videolooktime,jdbcType=VARCHAR},
+            </if>
+            <if test="videocollection != null" >
+                #{videocollection,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="videoleaving != null" >
+                #{videoleaving,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="videotime != null" >
+                #{videotime,jdbcType=VARCHAR},
+            </if>
+            <if test="videostate != null" >
+                #{videostate,jdbcType=VARCHAR},
+            </if>
+            <if test="videocategory != null" >
+                #{videocategory,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.main.entity.VideoExample" resultType="java.lang.Integer" >
+        select count(*) from video
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update video
+        <set >
+            <if test="record.videoid != null" >
+                videoID = #{record.videoid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.videoname != null" >
+                videoName = #{record.videoname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.videoimage != null" >
+                videoImage = #{record.videoimage,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.videoaddress != null" >
+                videoAddress = #{record.videoaddress,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.videolooktime != null" >
+                videolookTime = #{record.videolooktime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.videocollection != null" >
+                videoCollection = #{record.videocollection,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.videoleaving != null" >
+                videoLeaving = #{record.videoleaving,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.videotime != null" >
+                videoTime = #{record.videotime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.videostate != null" >
+                videoState = #{record.videostate,jdbcType=VARCHAR},
+            </if>
+            <if test="record.videocategory != null" >
+                videocAtegory = #{record.videocategory,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update video
+        set videoID = #{record.videoid,jdbcType=VARCHAR},
+            videoName = #{record.videoname,jdbcType=VARCHAR},
+            videoImage = #{record.videoimage,jdbcType=LONGVARCHAR},
+            videoAddress = #{record.videoaddress,jdbcType=LONGVARCHAR},
+            videolookTime = #{record.videolooktime,jdbcType=VARCHAR},
+            videoCollection = #{record.videocollection,jdbcType=LONGVARCHAR},
+            videoLeaving = #{record.videoleaving,jdbcType=LONGVARCHAR},
+            videoTime = #{record.videotime,jdbcType=VARCHAR},
+            videoState = #{record.videostate,jdbcType=VARCHAR},
+            videocAtegory = #{record.videocategory,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.main.entity.Video" >
+        update video
+        <set >
+            <if test="videoname != null" >
+                videoName = #{videoname,jdbcType=VARCHAR},
+            </if>
+            <if test="videoimage != null" >
+                videoImage = #{videoimage,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="videoaddress != null" >
+                videoAddress = #{videoaddress,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="videolooktime != null" >
+                videolookTime = #{videolooktime,jdbcType=VARCHAR},
+            </if>
+            <if test="videocollection != null" >
+                videoCollection = #{videocollection,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="videoleaving != null" >
+                videoLeaving = #{videoleaving,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="videotime != null" >
+                videoTime = #{videotime,jdbcType=VARCHAR},
+            </if>
+            <if test="videostate != null" >
+                videoState = #{videostate,jdbcType=VARCHAR},
+            </if>
+            <if test="videocategory != null" >
+                videocAtegory = #{videocategory,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where videoID = #{videoid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.main.entity.Video" >
+        update video
+        set videoName = #{videoname,jdbcType=VARCHAR},
+            videoImage = #{videoimage,jdbcType=LONGVARCHAR},
+            videoAddress = #{videoaddress,jdbcType=LONGVARCHAR},
+            videolookTime = #{videolooktime,jdbcType=VARCHAR},
+            videoCollection = #{videocollection,jdbcType=LONGVARCHAR},
+            videoLeaving = #{videoleaving,jdbcType=LONGVARCHAR},
+            videoTime = #{videotime,jdbcType=VARCHAR},
+            videoState = #{videostate,jdbcType=VARCHAR},
+            videocAtegory = #{videocategory,jdbcType=VARCHAR}
+        where videoID = #{videoid,jdbcType=VARCHAR}
+    </update>
+</mapper>

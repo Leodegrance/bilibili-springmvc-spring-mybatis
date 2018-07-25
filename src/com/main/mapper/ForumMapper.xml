@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.main.mapper.ForumMapper" >
+
+    <resultMap id="BaseResultMap" type="com.main.entity.Forum" >
+        <id column="forumID" property="forumid" jdbcType="VARCHAR" />
+        <result column="forumBT" property="forumbt" jdbcType="LONGVARCHAR" />
+        <result column="forummessage" property="forummessage" jdbcType="LONGVARCHAR" />
+        <result column="forumuserName" property="forumusername" jdbcType="VARCHAR" />
+        <result column="forumTime" property="forumtime" jdbcType="VARCHAR" />
+        <result column="forumliebie" property="forumliebie" jdbcType="VARCHAR" />
+        <result column="forumAmount" property="forumamount" jdbcType="VARCHAR" />
+        <result column="firumhand" property="firumhand" jdbcType="LONGVARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        forumID, forumBT, forummessage, forumuserName, forumTime, forumliebie, forumAmount, 
+        firumhand
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.main.entity.ForumExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from forum
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from forum
+        where forumID = #{forumid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from forum
+        where forumID = #{forumid,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.main.entity.ForumExample" >
+        delete from forum
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.main.entity.Forum" >
+        insert into forum (forumID, forumBT, forummessage, 
+            forumuserName, forumTime, forumliebie, 
+            forumAmount, firumhand)
+        values (#{forumid,jdbcType=VARCHAR}, #{forumbt,jdbcType=LONGVARCHAR}, #{forummessage,jdbcType=LONGVARCHAR}, 
+            #{forumusername,jdbcType=VARCHAR}, #{forumtime,jdbcType=VARCHAR}, #{forumliebie,jdbcType=VARCHAR}, 
+            #{forumamount,jdbcType=VARCHAR}, #{firumhand,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.main.entity.Forum" >
+        insert into forum
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="forumid != null" >
+                forumID,
+            </if>
+            <if test="forumbt != null" >
+                forumBT,
+            </if>
+            <if test="forummessage != null" >
+                forummessage,
+            </if>
+            <if test="forumusername != null" >
+                forumuserName,
+            </if>
+            <if test="forumtime != null" >
+                forumTime,
+            </if>
+            <if test="forumliebie != null" >
+                forumliebie,
+            </if>
+            <if test="forumamount != null" >
+                forumAmount,
+            </if>
+            <if test="firumhand != null" >
+                firumhand,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="forumid != null" >
+                #{forumid,jdbcType=VARCHAR},
+            </if>
+            <if test="forumbt != null" >
+                #{forumbt,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="forummessage != null" >
+                #{forummessage,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="forumusername != null" >
+                #{forumusername,jdbcType=VARCHAR},
+            </if>
+            <if test="forumtime != null" >
+                #{forumtime,jdbcType=VARCHAR},
+            </if>
+            <if test="forumliebie != null" >
+                #{forumliebie,jdbcType=VARCHAR},
+            </if>
+            <if test="forumamount != null" >
+                #{forumamount,jdbcType=VARCHAR},
+            </if>
+            <if test="firumhand != null" >
+                #{firumhand,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.main.entity.ForumExample" resultType="java.lang.Integer" >
+        select count(*) from forum
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update forum
+        <set >
+            <if test="record.forumid != null" >
+                forumID = #{record.forumid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.forumbt != null" >
+                forumBT = #{record.forumbt,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.forummessage != null" >
+                forummessage = #{record.forummessage,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.forumusername != null" >
+                forumuserName = #{record.forumusername,jdbcType=VARCHAR},
+            </if>
+            <if test="record.forumtime != null" >
+                forumTime = #{record.forumtime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.forumliebie != null" >
+                forumliebie = #{record.forumliebie,jdbcType=VARCHAR},
+            </if>
+            <if test="record.forumamount != null" >
+                forumAmount = #{record.forumamount,jdbcType=VARCHAR},
+            </if>
+            <if test="record.firumhand != null" >
+                firumhand = #{record.firumhand,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update forum
+        set forumID = #{record.forumid,jdbcType=VARCHAR},
+            forumBT = #{record.forumbt,jdbcType=LONGVARCHAR},
+            forummessage = #{record.forummessage,jdbcType=LONGVARCHAR},
+            forumuserName = #{record.forumusername,jdbcType=VARCHAR},
+            forumTime = #{record.forumtime,jdbcType=VARCHAR},
+            forumliebie = #{record.forumliebie,jdbcType=VARCHAR},
+            forumAmount = #{record.forumamount,jdbcType=VARCHAR},
+            firumhand = #{record.firumhand,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.main.entity.Forum" >
+        update forum
+        <set >
+            <if test="forumbt != null" >
+                forumBT = #{forumbt,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="forummessage != null" >
+                forummessage = #{forummessage,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="forumusername != null" >
+                forumuserName = #{forumusername,jdbcType=VARCHAR},
+            </if>
+            <if test="forumtime != null" >
+                forumTime = #{forumtime,jdbcType=VARCHAR},
+            </if>
+            <if test="forumliebie != null" >
+                forumliebie = #{forumliebie,jdbcType=VARCHAR},
+            </if>
+            <if test="forumamount != null" >
+                forumAmount = #{forumamount,jdbcType=VARCHAR},
+            </if>
+            <if test="firumhand != null" >
+                firumhand = #{firumhand,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where forumID = #{forumid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.main.entity.Forum" >
+        update forum
+        set forumBT = #{forumbt,jdbcType=LONGVARCHAR},
+            forummessage = #{forummessage,jdbcType=LONGVARCHAR},
+            forumuserName = #{forumusername,jdbcType=VARCHAR},
+            forumTime = #{forumtime,jdbcType=VARCHAR},
+            forumliebie = #{forumliebie,jdbcType=VARCHAR},
+            forumAmount = #{forumamount,jdbcType=VARCHAR},
+            firumhand = #{firumhand,jdbcType=LONGVARCHAR}
+        where forumID = #{forumid,jdbcType=VARCHAR}
+    </update>
+</mapper>

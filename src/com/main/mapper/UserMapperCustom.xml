@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.main.mapper.UserMapperCustom" >
+	<select id="findUserByUserNameAndPassword" parameterType="com.main.entity.User" resultType="java.lang.Integer">
+		SELECT count(*) FROM user WHERE userName = #{username} And passWord = #{password}
+	</select>
+	
+	<select id="userlist" parameterType="java.lang.String" resultType="com.main.entity.User">
+		SELECT * FROM user WHERE userName = #{value}
+	</select>
+	
+	<update id="updatePassword" parameterType="com.main.entity.User">
+		UPDATE  user SET passWord = #{password} WHERE userName = #{username}
+	</update>
+	
+	<update id="updateEntityEmial" parameterType="com.main.entity.User">
+		UPDATE user SET userEmail = #{useremail} WHERE userName = #{username}
+	</update>
+	
+	<select id="findEmailByEntityName" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT user.userEmail FROM user WHERE userName = #{value}
+	</select>
+	
+	<select id="findPasswordByEntityName" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT user.passWord FROM user WHERE userName = #{value}
+	</select>
+	
+	<select id="findPayPasswordByEntityName" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT user.userPaypassword FROM user WHERE userName = #{value}
+	</select>
+	
+	<update id="updateEntityPhone" parameterType="com.main.entity.User">
+		UPDATE user SET userPhone = #{userphone} WHERE userName = #{username}
+	</update>
+	
+	<update id="updateEntityPayPassword" parameterType="com.main.entity.User">
+		UPDATE user SET userPaypassword = #{userpaypassword} WHERE userName = #{username}
+	</update>
+	
+	<update id="updateEntityAddress" parameterType="com.main.entity.User">
+		update user
+		<set>
+			<if test="usermingzi != null">
+				userMingzi = #{usermingzi,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="userphone != null">
+				userPhone = #{userphone, jdbcType = VARCHAR},
+			</if>
+			
+			<if test="useraddress != null">
+				userAddress = #{useraddress, jdbcType = VARCHAR},
+			</if>
+		</set>
+		
+			<if test="username != null">
+				where userName = #{username, jdbcType = VARCHAR}
+			</if>
+	</update>
+</mapper>

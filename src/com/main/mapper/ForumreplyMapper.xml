@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.main.mapper.ForumreplyMapper" >
+
+    <resultMap id="BaseResultMap" type="com.main.entity.Forumreply" >
+        <id column="replyid" property="replyid" jdbcType="VARCHAR" />
+        <result column="replyneirong" property="replyneirong" jdbcType="LONGVARCHAR" />
+        <result column="replytime" property="replytime" jdbcType="VARCHAR" />
+        <result column="replyhand" property="replyhand" jdbcType="VARCHAR" />
+        <result column="replytieziid" property="replytieziid" jdbcType="VARCHAR" />
+        <result column="replyname" property="replyname" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        replyid, replyneirong, replytime, replyhand, replytieziid, replyname
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.main.entity.ForumreplyExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from forumreply
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from forumreply
+        where replyid = #{replyid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from forumreply
+        where replyid = #{replyid,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.main.entity.ForumreplyExample" >
+        delete from forumreply
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.main.entity.Forumreply" >
+        insert into forumreply (replyid, replyneirong, replytime, 
+            replyhand, replytieziid, replyname
+            )
+        values (#{replyid,jdbcType=VARCHAR}, #{replyneirong,jdbcType=LONGVARCHAR}, #{replytime,jdbcType=VARCHAR}, 
+            #{replyhand,jdbcType=VARCHAR}, #{replytieziid,jdbcType=VARCHAR}, #{replyname,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.main.entity.Forumreply" >
+        insert into forumreply
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="replyid != null" >
+                replyid,
+            </if>
+            <if test="replyneirong != null" >
+                replyneirong,
+            </if>
+            <if test="replytime != null" >
+                replytime,
+            </if>
+            <if test="replyhand != null" >
+                replyhand,
+            </if>
+            <if test="replytieziid != null" >
+                replytieziid,
+            </if>
+            <if test="replyname != null" >
+                replyname,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="replyid != null" >
+                #{replyid,jdbcType=VARCHAR},
+            </if>
+            <if test="replyneirong != null" >
+                #{replyneirong,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="replytime != null" >
+                #{replytime,jdbcType=VARCHAR},
+            </if>
+            <if test="replyhand != null" >
+                #{replyhand,jdbcType=VARCHAR},
+            </if>
+            <if test="replytieziid != null" >
+                #{replytieziid,jdbcType=VARCHAR},
+            </if>
+            <if test="replyname != null" >
+                #{replyname,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.main.entity.ForumreplyExample" resultType="java.lang.Integer" >
+        select count(*) from forumreply
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update forumreply
+        <set >
+            <if test="record.replyid != null" >
+                replyid = #{record.replyid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.replyneirong != null" >
+                replyneirong = #{record.replyneirong,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.replytime != null" >
+                replytime = #{record.replytime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.replyhand != null" >
+                replyhand = #{record.replyhand,jdbcType=VARCHAR},
+            </if>
+            <if test="record.replytieziid != null" >
+                replytieziid = #{record.replytieziid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.replyname != null" >
+                replyname = #{record.replyname,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update forumreply
+        set replyid = #{record.replyid,jdbcType=VARCHAR},
+            replyneirong = #{record.replyneirong,jdbcType=LONGVARCHAR},
+            replytime = #{record.replytime,jdbcType=VARCHAR},
+            replyhand = #{record.replyhand,jdbcType=VARCHAR},
+            replytieziid = #{record.replytieziid,jdbcType=VARCHAR},
+            replyname = #{record.replyname,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.main.entity.Forumreply" >
+        update forumreply
+        <set >
+            <if test="replyneirong != null" >
+                replyneirong = #{replyneirong,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="replytime != null" >
+                replytime = #{replytime,jdbcType=VARCHAR},
+            </if>
+            <if test="replyhand != null" >
+                replyhand = #{replyhand,jdbcType=VARCHAR},
+            </if>
+            <if test="replytieziid != null" >
+                replytieziid = #{replytieziid,jdbcType=VARCHAR},
+            </if>
+            <if test="replyname != null" >
+                replyname = #{replyname,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where replyid = #{replyid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.main.entity.Forumreply" >
+        update forumreply
+        set replyneirong = #{replyneirong,jdbcType=LONGVARCHAR},
+            replytime = #{replytime,jdbcType=VARCHAR},
+            replyhand = #{replyhand,jdbcType=VARCHAR},
+            replytieziid = #{replytieziid,jdbcType=VARCHAR},
+            replyname = #{replyname,jdbcType=VARCHAR}
+        where replyid = #{replyid,jdbcType=VARCHAR}
+    </update>
+</mapper>

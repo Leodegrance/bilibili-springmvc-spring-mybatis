@@ -1,0 +1,73 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+		
+	<!-- 这个是注解驱动 -->
+	<!-- <mvc:annotation-driven />
+	<mvc:default-servlet-handler /> -->
+
+	<!-- 这个是注解驱动 -->
+	<context:component-scan base-package="com.main.controller"/>
+	<context:component-scan base-package="com.main.serlvet"/>
+	<context:component-scan base-package="com.main.service"/>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+	<!-- 配置视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- <property name=""></property> 暂时不需要配置 -->
+		<property name="redirectContextRelative" value="true"></property>
+		<property name="prefix" value="/WEB-INF/web-jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<!-- 模板 -->
+	<!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>	  -->
+	
+		<mvc:interceptors>
+		<!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 --> 
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />  
+        <!-- 如果不定义 mvc:mapping path 将拦截所有的URL请求 -->
+           	<mvc:interceptor>
+           				<!-- 扫描所有 -->
+           			 <mvc:mapping path="/**" />
+           			 <!-- 不扫描 -->
+           			 <mvc:exclude-mapping path="/index.do"/><!-- 首页 -->
+           			 <mvc:exclude-mapping path="/one"/><!-- 首页 -->
+           			 <mvc:exclude-mapping path="/logoone.do"/><!-- 首页 -->
+           			 <mvc:exclude-mapping path="/login.do"/><!-- 登录 -->
+           			 <mvc:exclude-mapping path="/loginservice.do"/><!-- 登录请求 -->
+           			 <mvc:exclude-mapping path="/register.do"/><!-- 注册 -->
+           			 <mvc:exclude-mapping path="/loginservice.do"/><!-- 登录 -->
+           			 <mvc:exclude-mapping path="/messageuser.do"/><!-- 注册 -->
+           			 <mvc:exclude-mapping path="/register_form.do"/><!-- 注册请求 -->
+           			  <mvc:exclude-mapping path="/testshabi.do"/><!-- 详情 -->
+           			  <mvc:exclude-mapping path="/ajaxtijiao1.do"/><!-- 分类ajax --> 
+           			 <mvc:exclude-mapping path="/Shopping.do"/><!-- 商品 -->
+           			 <mvc:exclude-mapping path="/gridspay.do"/><!-- 商品详情 -->
+           			  <mvc:exclude-mapping path="/videon.do"/><!-- 视频播放 -->
+           			 <mvc:exclude-mapping path="/messageuser.do"/><!-- 视频播放 -->
+           			  <mvc:exclude-mapping path="/ajaxTuiJian"/><!-- 论坛 -->
+           			  <mvc:exclude-mapping path="/forum.do"/>
+           			  <mvc:exclude-mapping path="/loginforum"/>
+           			  <mvc:exclude-mapping path="/forumReply"/>
+           			  <mvc:exclude-mapping path="/Forum"/>
+		 
+	        <bean class="com.main.filter.AuthInterceptor">
+	        </bean>
+     	 </mvc:interceptor>
+	</mvc:interceptors>
+</beans>
